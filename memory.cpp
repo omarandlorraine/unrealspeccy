@@ -67,6 +67,10 @@ void set_banks()
          // обработка памяти gmx (конфликтует со стандартным profrom)
          // нужно сделать флаг записи в порт 7EFD, и если была хоть одна запись
          // то обрабатывать rom по стандарту gmx
+	 //
+	 // The GMX way of handling memory (conflicts with the standard profrom)
+	 // we need to set a flag when 7EFD has been written to, and if there's been at least one write,
+	 // then address the ROM by the GMX standard.
          comp.profrom_bank = ((comp.p7EFD >> 4) & 3) & temp.profrom_mask;
          {
              unsigned char *base = ROM_BASE_M + (comp.profrom_bank * 64*1024);
@@ -77,7 +81,7 @@ void set_banks()
          }
 */
 
-         // Доработка из книжки gmx (включение портов dos из ОЗУ, сделано немного не так как в реальной схеме)
+         // доработка из книжки gmx (включение портов dos из ОЗУ, сделано немного не так как в реальной схеме)
          if(comp.p1FFD & 4)
              comp.flags |= CF_TRDOS;
          if(comp.p1FFD & 2)
